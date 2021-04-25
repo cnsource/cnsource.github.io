@@ -3,6 +3,9 @@
     white-space: normal;
     word-break: break-all;
 }
+.align-center{
+  text-align: center;
+}
 .text-no-break{
   white-space: normal;
   word-break: keep-all;
