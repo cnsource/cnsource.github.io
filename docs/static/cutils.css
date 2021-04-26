@@ -11,9 +11,11 @@
   word-break: keep-all;
 }
 .text-elipsis{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .text-elipsis-2{
     overflow: hidden;
@@ -44,5 +46,29 @@
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
+}
+.v-top{
+  display: grid;
+  align-items: start;
+}
+.v-center{
+  display: grid;
+  align-items: center;
+}
+.v-end{
+  display: grid;
+  align-items: end;
+}
+.h-start{
+  display: grid;
+  justify-items: start;
+}
+.h-center{
+  display: grid;
+  justify-items: center;
+}
+.h-end{
+  display: grid;
+  justify-items: end;
 }
 
