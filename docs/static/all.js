@@ -36,6 +36,7 @@ export default  function (Vue,options){
         const poiID = pointer.set(passage.objectId)
         const query = Bmob.Query('PassageList');
         query.set("type", type)
+        query.set("ftime",this.dateFormat("YYYY-mm-dd HH:MM:SS",new Date()))
         query.set("title", plist.title)
         query.set("description", plist.description)
         query.set("coverlink", plist.coverlink)
@@ -57,13 +58,32 @@ export default  function (Vue,options){
           errback(err)
         })
       },
-
+      dateFormat(fmt, date) {
+        let ret;
+        const opt = {
+          "Y+": date.getFullYear().toString(),        // 年
+          "m+": (date.getMonth() + 1).toString(),     // 月
+          "d+": date.getDate().toString(),            // 日
+          "H+": date.getHours().toString(),           // 时
+          "M+": date.getMinutes().toString(),         // 分
+          "S+": date.getSeconds().toString()          // 秒
+          // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (let k in opt) {
+          ret = new RegExp("(" + k + ")").exec(fmt);
+          if (ret) {
+            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+          };
+        };
+        return fmt;
+      },
       /*更新指定文章*/
       /*更新指定草稿*/
       updatePList(plist,callback,errback){
         const query = Bmob.Query('PassageList');
         query.set('id', plist.objectId) //需要修改的objectId
         query.set("title", plist.title)
+        query.set("ftime",this.dateFormat("YYYY-mm-dd HH:MM:SS",new Date()))
         query.set("type", plist.type)
         query.set("description", plist.description)
         query.set("coverlink", plist.coverlink)
@@ -91,7 +111,7 @@ export default  function (Vue,options){
         }
         query.limit(limit);
         query.skip(page * limit)
-        query.order("-createdAt");
+        query.order("-ftime");
         query.find().then(res => {
           callback(res)
         });
